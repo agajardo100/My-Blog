@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %} Home {% endblock title %}
+{% block content %}
+
+<div class="col-sm-6 col-sm-offset-3 post-list">
+  <!-- Title -->
+  <div class='page-title'>
+    <h2> Recent Posts </h2>
+  </div>
+
+  <!-- Search -->
+    <form class='row search-bar' method='GET' action=''>
+      <div class="col-sm-6">
+        <div class="input-group" >
+          <input class='form-control' type='text' name='q' placeholder="Search posts" value='{{ request.GET.q}} '/>
+          <span class='input-group-btn'>
+            <button class='btn btn-default' type='submit'> Search <i class='fa fa-search'></i> </button>
+          </span>
+        </div>
+      </div>
+    </form>
+
+
+  <!-- List each Blog Post -->
+  {% for obj in object_list %}
+    <div class="row post-box">
+      <div class="col-sm-12">
+        <div class="thumbnail">
+          <!-- Post image-->
+          {% if obj.image %}
+            <img src='{{ obj.image.url }}' class='img img-responsive list-image' />
+          {% endif %}
+          <!-- Post preview -->
+          <div class="caption">
+            <h3>  <a class= 'post-title' href="{{ obj.get_absolute_url }}"> {{ obj.title }} </a>
+              <small>
+              {% if obj.draft %}
+                <span style='color:rgb(215, 25, 25);'> (Draft) </span>
+              {% endif %}
+              </small>
+              {% if obj.publish > today %}<h3> Future Post</h3> {% endif %}
+            </h3>
+            <small><i class="fa fa-clock-o fa-1x "></i> {{ obj.timestamp | timesince }} ago</small>
+
+            <p> Author: {% if instance.user.get_full_name%}{{ instance.user.get_full_name }}
+                        {% else %} {{ instance.user.username }}
+                        {% endif %}
+              </p>
+
+            <div class='post-detail-caption'>
+              <p>{{ obj.get_markdown | truncatechars_html:140 }} </p>
+            </div>
+            <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
+          </div>
+
+        </div>
+        <hr/>
+      </div>
+      <hr/>
+    </div>
+    {# {% cycle "" "<div class='col-sm-12'><hr/></div></div><div class='row'>"%}#}
+
+  {% endfor %}
+
+  <!-- Paginator -->
+  <div class="pagination col-sm-12">
+    <nav aria-label="...">
+      <ul class="pager">
+
+        {% if object_list.has_previous %}
+          <li>  <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Previous</a></li>
+        {% endif %}
+
+        <li>
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}
+        </li>
+
+        {% if object_list.has_next %}
+          <li>  <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a></li>
+        {% endif %}
+
+      </ul>
+    </nav>
+  </div>
+
+</div> <!--Close post-list div -->
+
+{% endblock content %}

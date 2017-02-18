@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} Delete Comment {% endblock title %}
+
+{% block content %}
+
+<h1> Delete Comment </h1>
+
+<div class='col-sm-6 col-sm-offset-3'>
+
+    <form method="POST" action="."> {% csrf_token %}
+      <p>
+        Are you sure you wish to delete your comment: "{{object.content}}" ?
+      </p>
+      <input type='submit' value='Confirm' class='btn btn-warning'>
+      <a href='{{object.get_absolute_url}}' class='btn btn-default'/> Cancel </a>
+    </form>
+
+</div>
+
+{% endblock content %}

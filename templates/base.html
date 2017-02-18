@@ -1,0 +1,181 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Andres Gajardo">
+
+  <title> {% block title %}  {% endblock title %} | Andres' Blog </title>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous" />
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous"/>
+
+  <!-- Custom font -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+  <!-- Custom Stylesheet -->
+  <link rel='stylesheet' href='{% static "css/site_style.css" %}' />
+
+  <style>
+    {% block style %}     {% endblock style %}
+  </style>
+
+  {% block head_extra %}   {% endblock head_extra %}
+
+  <!-- FontAwesome CDN -->
+  <script src="https://use.fontawesome.com/f19450d790.js"></script>
+
+</head>
+
+<body>
+
+<!-- Nav Bar-->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Hamburger Menu for mobile/smaller display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            <a class="navbar-brand" href="{% url 'posts:list' %}"><i class="fa fa-futbol-o fa-1x" aria-hidden="true"></i> Andres' Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+                {% if request.user.is_staff or request.user.is_superuser %}
+                <li>
+                  <a href="{% url 'posts:create' %}">Create Post</a>
+                </li>
+                {% endif %}
+
+                <!-- TODO: Float: right or pull-right-->
+                {% if not request.user.is_authenticated %}
+                  <li class=''>
+                    <a class='login-btn'href="{% url 'login' %}"><i class="fa fa-sign-in fa-1x" aria-hidden="true"></i>
+                      Login </a>
+                  </li>
+                  <li class=''>
+                    <a class='register-btn' href="{% url 'register' %}"><i class="fa fa-user-plus fa-1x" aria-hidden="true"></i>
+                      Register </a>
+                  </li>
+                {% else %}
+                  <li class='logout-btn'>
+                    <a class='pull-right' href="{% url 'logout' %}"><i class="fa fa-power-off fa-1x" aria-hidden="true"> </i>
+                      Logout </a>
+                  </li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+  <!-- Messages Bar -->
+  {% if messages %}
+    <div class='messages col-sm-6 col-sm-offset-3 text-center'>
+      <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <div class='container'>
+    {% block content %}
+
+    {% endblock content%}
+  </div>
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+  crossorigin="anonymous">
+  </script>
+
+  <!-- marked CDN: markdown parser and compiler -->
+  <script src= "https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+
+  <script type="text/javascript">
+  $(document).ready(function(){
+
+      $(".post-detail-item img").each(function(){
+          $(this).addClass("img-responsive");
+      });
+
+      //Hide markdown images in post_list view
+      $(".post-detail-caption img").each(function(){
+          $(this).addClass("hidden");
+      });
+
+      // Show replies when clicked
+      $(".comment-reply-btn").click(function(event){
+        event.preventDefault();
+        $(this).parent().parent().next(".comment-reply").fadeToggle();
+      });
+
+      //Preview Post Title and Content
+      function setContent(value){
+          var markedContent = marked(value);
+          $("#preview-content").html(markedContent);
+          $("#preview-content img").each(function(){
+              $(this).addClass("img-responsive");
+          });
+      }
+      var contentInput = $("#id_content");
+      setContent(contentInput.val());
+
+      contentInput.keyup(function(){
+          var newContent = $(this).val();
+          setContent(newContent);
+      });
+
+      //Title preview
+      function setTitle(value) {
+          $("#preview-title").text(value);
+      }
+      var titleInput = $("#id_title");
+
+      setTitle(titleInput.val());
+
+      titleInput.keyup(function(){
+          var newContent = $(this).val();
+          setTitle(newContent);
+      });
+
+    });
+  </script>
+
+</body>
+
+</html>

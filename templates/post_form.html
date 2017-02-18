@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-4 post-form">
+      <h1> Create a Post </h1>
+      <hr />
+      <form role ='form' method='POST' action='.' enctype='multipart/form-data'> {% csrf_token %}
+      {{ form | crispy }}
+      <!-- Submit Form button -->
+      <div class='col-sm-4 btn btn-submit'>
+          <input type='submit' value='Create Post' />
+      </div>
+    </form>
+    {{form.media}}
+    </div>
+
+    <div class='col-xs-6 post-preview'>
+    <h1>Post Preview</h1>
+    <hr />
+      <div class='content-preview'>
+        <h3 id='preview-title'></h3>
+        <p id='preview-content'></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

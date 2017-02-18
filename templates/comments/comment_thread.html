@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class='col-sm-6 col-sm-offset-3 comment-thread'>
+      <h1> Comment Thread </h1>
+      <br />
+      <p class='parent-comment'> {{comment.content}} </p>
+      <footer class='parent-footer'> via {{ comment.user }} | {{comment.timestamp| timesince}} ago |
+          {% if comment.children.count == 1 %} {{ comment.children.count }} Reply | {% endif %}
+          {% if comment.children.count > 1 %} {{ comment.children.count }} Replies |{% endif %}
+          {% if request.user == comment.user %} <a class='' href="{% url 'comments:delete' comment.id %}"> Delete  </a/>
+            {% endif %}
+        </footer>
+        <hr />
+
+      <!-- Replies -->
+      <div>
+        {% for child_comment in comment.children %}
+          <blockquote>
+            <p class='child-comment'> {{child_comment.content}} </p>
+            <footer>
+              via {{ child_comment.user }} | {{child_comment.timestamp| timesince}} ago
+              {% if request.user == child_comment.user %}
+                <a class='' href="{% url 'comments:delete' child_comment.id %}"> | Delete </a/>
+              {% endif %}
+            </footer>
+          </blockquote>
+          <hr />
+        {% endfor %}
+        {% if request.user.is_authenticated %}
+          <form class='reply-form' method="POST" action="."> {% csrf_token %}
+            {{ form | crispy }}
+            <input type='hidden' name='parent_id' value='{{ comment.id }}' />
+            <input type='submit' value='Reply' class='btn btn-default' />
+          </form>
+        {% else %}
+          <br />
+          <p > You must be logged in to reply.</p>
+        {% endif %}
+      </div>
+
+</div>
+{% endblock content %}

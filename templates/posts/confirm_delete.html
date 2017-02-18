@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<div class='col-sm-6 col-sm-offset-3'>
+    <h1> Delete Post </h1>
+    <form method="POST" action="."> {% csrf_token %}
+      <p>
+        Are you sure you wish to delete this Post?
+      </p>
+      <input type='submit' value='Confirm' class='btn btn-warning'>
+      <a href='{{ instance.get_absolute_url }}' class='btn btn-default'/> Cancel </a>
+    </form>
+    <hr />
+    <div class="post-detail-item">
+      <h2> {{instance.title }} </h2>
+      {{ instance.get_markdown }}
+    </div>
+
+</div>
+
+{% endblock content %}
