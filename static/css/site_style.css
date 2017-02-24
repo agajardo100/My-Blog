@@ -146,3 +146,7 @@ a.fa-twitter-square{
 a.fa-twitter-square:hover{
   color: rgb(29,161,242);
 }
+
+.profile-pic{
+    border-radius: 50%;
+}
