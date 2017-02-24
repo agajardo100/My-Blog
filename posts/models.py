@@ -16,6 +16,9 @@ class PostManager(models.Manager):
     def active(self, *args, **kwargs):
         return super(PostManager, self).filter(draft=False).filter(publish__lte=timezone.now())
 
+def upload_location(instance, filename):
+    return "%s/%s" %(instance.id, filename)
+
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
     title = models.CharField(max_length=120)
@@ -23,6 +26,7 @@ class Post(models.Model):
     height_field = models.IntegerField(default=0)
     width_field = models.IntegerField(default=0)
     image = models.ImageField(null=True, blank=True,
+                    upload_to=upload_location,
                     width_field='width_field',
                     height_field='height_field')
     content = models.TextField()
