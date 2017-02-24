@@ -25,7 +25,7 @@ SECRET_KEY = 'k%_tb_(4+9)mgzf=h442j=hf$_s9@ns=&#a1^vy(^*-e7$ewte'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["andresblog.herokuapp.com",]
 
 
 # Application definition
@@ -95,6 +95,11 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# Update database configuration with $DATABASE_URL.
+# import dj_database_url
+# db_from_env = dj_database_url.config()
+# DATABASES['default'].update(db_from_env)
 
 # User login
 LOGIN_REDIRECT_URL = 'posts:list'
