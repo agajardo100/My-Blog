@@ -8,6 +8,7 @@ app_name = 'posts'
 
 urlpatterns = [
     url(r'^$', views.post_list, name= 'list'),
+    url(r'^about$', views.about, name ='about'),
     url(r'^create/$', views.post_create, name= 'create'),
     url(r'^(?P<slug>[\w-]+)/$', views.post_detail, name= 'detail'),
     url(r'^(?P<slug>[\w-]+)/edit/$', views.post_update, name= 'update'),

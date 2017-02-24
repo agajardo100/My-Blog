@@ -14,6 +14,10 @@ from .forms import PostForm
 from comments.forms import CommentForm
 from comments.models import Comment
 
+
+def about(request):
+    return render(request,'about.html', {})
+
 # List of Blog Posts
 def post_list(request):
     if request.user.is_staff or request.user.is_superuser:
