@@ -1,5 +1,4 @@
 #Local Dev
-andresblog/settings/base.py
 andresblog/settings/local.py
 
 # Byte-compiled / optimized / DLL files
