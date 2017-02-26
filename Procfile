@@ -1,1 +1,1 @@
-web: gunicorn andresblog.wsgi --log-file=-
+web: gunicorn andresblog.wsgi --log-file -

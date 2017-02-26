@@ -11,11 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-# See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
+from .base import *
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'k%_tb_(4+9)mgzf=h442j=hf$_s9@ns=&#a1^vy(^*-e7$ewte'
@@ -23,7 +19,7 @@ SECRET_KEY = 'k%_tb_(4+9)mgzf=h442j=hf$_s9@ns=&#a1^vy(^*-e7$ewte'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["andresblog.herokuapp.com",'localhost']
+ALLOWED_HOSTS = ["andresblog.herokuapp.com",]
 
 # Application definition
 
@@ -46,9 +42,6 @@ INSTALLED_APPS = [
     'comments',
     'posts',
 ]
-
-# For crispy template tags
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -96,8 +89,9 @@ DATABASES = {
 
 #Update database configuration with $DATABASE_URL.
 import dj_database_url
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+
+DATABASES['default'] = dj_database_url.config()
+DATABASES['default']['CONN_MAX_AGE'] = 500
 
 
 # User login
@@ -120,20 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'America/New_York'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
 
 
 # Simplified static file serving.
