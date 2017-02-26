@@ -1,0 +1,154 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+
+
+/* Nav Bar*/
+li.logout-btn {
+  float: right;
+}
+
+.page-title {
+  color: gray;
+  font-size: 28px;
+}
+
+
+/* Messages Bar*/
+ul.messages {
+  list-style-type: none;
+}
+
+li.success {
+  background-color: rgba(102, 185, 96, 0.85);
+  color: green;
+}
+
+li.error {
+  background-color: rgba(221, 41, 51, 0.85);
+  color: rgb(138, 9, 24);
+}
+
+li.warning {
+  background-color: rgba(237, 223, 37, 0.83);
+  color: rgb(149, 152, 4);
+}
+
+
+/* Post List */
+.search-bar{
+  padding-bottom: 20px;
+}
+
+.list-image{
+  max-height: 50%;
+  max-width: auto;
+}
+
+
+/* Post Detail Styles */
+.post-title{
+  font-size: 22px;
+  color: gray;
+  margin-bottom: -15px;
+}
+
+.draft {
+  color: rgb(215, 25, 25);
+}
+
+.post-author {
+  margin-top: 20px;
+  font-size: 18px;
+  margin-bottom: 0px;
+  color: rgb(33, 31, 31)
+}
+
+.post-time{
+  font-size: 16px;
+  color: rgba(130, 130, 130, 0.93);
+}
+
+.comment-reply {
+  display: none;
+}
+
+.view-thread-btn {
+  clear: left;
+  float: right;
+}
+
+
+/* Comment Thread */
+p.parent-comment, p.child-comment{
+  font-size: 16px;
+}
+
+p.parent-comment {
+  padding-bottom: 10px;
+}
+
+.parent-footer {
+  margin-top: 10px;
+  margin-bottom: -10px;
+}
+
+
+/* Post Form */
+.post-form {
+  float:left;
+  padding-right: -50px;
+}
+
+.post-preview {
+  float: right;
+  padding-left: 50px;
+}
+
+.wmd-panel {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+
+
+
+/* Social Sharing Links */
+a.fa-facebook-official{
+  color: rgb(59,89,152);
+  padding-right: 5px;
+}
+
+a.fa-facebook-official:hover{
+  color: rgb(59,89,152);
+}
+
+a.fa-google-plus-square {
+  color: rgb(219,68,55);
+  padding-right: 5px;
+
+}
+
+a.fa-google-plus-square:hover {
+  color: rgb(219,68,55);
+}
+
+a.fa-twitter-square{
+  color: rgb(29,161,242);
+  padding-right: 5px;
+
+}
+
+a.fa-twitter-square:hover{
+  color: rgb(29,161,242);
+}
+
+.profile-pic{
+    width: 40%;
+    height: auto;
+    border-radius: 50%;
+}
