@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 from .base import *
+import dj_database_url
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'k%_tb_(4+9)mgzf=h442j=hf$_s9@ns=&#a1^vy(^*-e7$ewte'
@@ -87,11 +90,14 @@ DATABASES = {
     }
 }
 
-#Update database configuration with $DATABASE_URL.
-import dj_database_url
 
-DATABASES['default'] = dj_database_url.config()
-DATABASES['default']['CONN_MAX_AGE'] = 500
+
+# Update database configuration with $DATABASE_URL.
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # User login
