@@ -125,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 #STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-STATICFILES_STORAGE ='django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+#STATICFILES_STORAGE ='django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
